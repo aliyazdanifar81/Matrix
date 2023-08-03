@@ -69,7 +69,7 @@ class Matrix:
     def __chr(self, org, des):  # change rows
         self.__mat[org], self.__mat[des] = self.__mat[des], self.__mat[org]
 
-    def mulnum(self, num, ind, row=0,
+    def __mulnum(self, num, ind, row=0,
                addind: int = None):  # multiply a number into one row/column and add to another row/column
         if not row:
             tmp = [num * i for i in self.__mat[ind]]
@@ -89,10 +89,6 @@ a = Matrix(3, 4, [[1, 0, 1, 5], [1, 2, 0, 6], [4, 6, 2, 7]])
 b = Matrix(m, n, [[1, 0, 1, 8], [1, 2, 0, 3], [4, 6, 2, 6], [0, 3, 6, 4]])
 c = Matrix(6, 6, [[1, 0, 0, 0, 0, 2], [0, 1, 0, 0, 2, 0], [0, 0, 1, 2, 0, 0], [0, 0, 2, 1, 0, 0], [0, 2, 0, 0, 1, 0],
                   [2, 0, 0, 0, 0, 1]])
-# a.transpose()
-print(a)
-# a.transpose()
-a.mulnum(1, 1, 1, 1)
 print(a)
 # c = a + b
 # print(c)
