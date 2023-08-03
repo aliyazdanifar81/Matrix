@@ -80,7 +80,7 @@ class Matrix:
             return
         else:
             self.transpose()
-            self.mulnum(num, ind, addind=addind)
+            self.__mulnum(num, ind, addind=addind)
             self.transpose()
 
 
