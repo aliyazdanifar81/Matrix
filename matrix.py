@@ -40,6 +40,8 @@ class Matrix:
                 pos += 1
         self.__mat = tmp
 
+    # *********** do not forget to write RREF function ********
+
     # Operator overloading
     def __add__(self, other: "Matrix"):
         if self.__c != other.__c or self.__r != other.__r:
