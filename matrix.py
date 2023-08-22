@@ -41,9 +41,15 @@ class Matrix:
         self.__mat = tmp
 
     def rref(self):
-        temp = self
+        temp, row = self, 0
+        while row < temp.__r:
+            if temp.__mat[row] == [0] * temp.__r:
+                pass
 
     # Operator overloading
+    def __getitem__(self, item):
+        return self.__mat[item]
+
     def __add__(self, other: "Matrix"):
         if self.__c != other.__c or self.__r != other.__r:
             raise Exception("Matrix Dimensions have to equal")
@@ -126,8 +132,6 @@ c = Matrix(6, 6, [[1, 0, 0, 0, 0, 2], [0, 1, 0, 0, 2, 0], [0, 0, 1, 2, 0, 0], [0
 e = Matrix(2, 3, [[1, 2, 3], [4, 5, 6]])
 f = Matrix(3, 2, [[7, 8], [9, 10], [11, 12]])
 
-print(a)
-a.chr(1, 3, 1)
-print(a)
+print(a[0])
 # c = a + b
 # print(c)
