@@ -40,7 +40,8 @@ class Matrix:
                 pos += 1
         self.__mat = tmp
 
-    # *********** do not forget to write RREF function ********
+    def rref(self):
+        temp = self
 
     # Operator overloading
     def __add__(self, other: "Matrix"):
@@ -95,8 +96,12 @@ class Matrix:
             i += 1
         return Matrix(self.__r - 1, self.__c - 1, result)
 
-    def __chr(self, org, des):  # change rows
+    def __chr(self, org, des, column=0):  # change rows and column
+        if column:
+            self.transpose()
         self.__mat[org], self.__mat[des] = self.__mat[des], self.__mat[org]
+        if column:
+            self.transpose()
 
     def __mulnum(self, num, ind, row=0,
                  addind: int = None):  # multiply a number into one row/column and add to another row/column
@@ -121,8 +126,8 @@ c = Matrix(6, 6, [[1, 0, 0, 0, 0, 2], [0, 1, 0, 0, 2, 0], [0, 0, 1, 2, 0, 0], [0
 e = Matrix(2, 3, [[1, 2, 3], [4, 5, 6]])
 f = Matrix(3, 2, [[7, 8], [9, 10], [11, 12]])
 
-print(e * f)
-print(e)
-print(f)
+print(a)
+a.chr(1, 3, 1)
+print(a)
 # c = a + b
 # print(c)
