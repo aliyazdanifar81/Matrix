@@ -1,3 +1,6 @@
+import copy
+
+
 class Matrix:
     def __init__(self, r: int = 0, c: int = 0, mat: list[list] = None):
         if mat is None:
@@ -40,11 +43,34 @@ class Matrix:
                 pos += 1
         self.__mat = tmp
 
-    def rref(self):
-        temp, row = self, 0
-        while row < temp.__r:
-            if temp.__mat[row] == [0] * temp.__r:
-                pass
+    def rref(self):  # Reduced Row Echelon form
+        temp, row, no_nonzero_row, limit = copy.deepcopy(self), 0, 0, min(self.__r, self.__c)
+        while row < limit:
+            pivot = row
+            if temp[row] == [0] * temp.__c:  # detect zero row and move it to bottom
+                for i in range(row + 1, temp.__r):
+                    if temp[i] != [0] * temp.__c:
+                        temp.__chr(row, i)
+                        break
+                else:
+                    no_nonzero_row = 1
+            if not no_nonzero_row:
+                if temp[row][pivot] == 0:  # make pivot element for each row nonzero
+                    for i in range(pivot + 1, temp.__c):
+                        if temp[row][i] != 0:
+                            # temp.__chr(pivot, i, 1) for changing two column (use when u want change columns)
+                            pivot = i
+                            break
+                temp.__mulnum(1 / temp[row][pivot], row)  # check the argument if it doesn't work good
+                for i in range(temp.__r):
+                    if i == row:
+                        continue
+                    if temp[i][pivot] != 0:
+                        temp.__mulnum(-1 * temp[i][pivot], row, addind=i)
+            else:
+                break
+            row += 1
+        return temp
 
     # Operator overloading
     def __getitem__(self, item):
@@ -114,7 +140,7 @@ class Matrix:
         if not row:
             tmp = [num * i for i in self.__mat[ind]]
             if addind is not None:
-                self.__mat[ind] = [x + y for x, y in zip(tmp, self.__mat[addind])]
+                self.__mat[addind] = [x + y for x, y in zip(tmp, self.__mat[addind])]
             else:
                 self.__mat[ind] = tmp
             return
@@ -131,7 +157,9 @@ c = Matrix(6, 6, [[1, 0, 0, 0, 0, 2], [0, 1, 0, 0, 2, 0], [0, 0, 1, 2, 0, 0], [0
                   [2, 0, 0, 0, 0, 1]])
 e = Matrix(2, 3, [[1, 2, 3], [4, 5, 6]])
 f = Matrix(3, 2, [[7, 8], [9, 10], [11, 12]])
+g = Matrix(4, 5, [[1, 2, 3, 4, 5], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [6, 7, 8, 9, 10]])
+l = Matrix(3, 5, [[1, 2, 3, 4, 5], [0, 0, 2, 3, 4], [0, 0, 0, 1, 3]])
 
-print(a[0])
+print(l.rref())
 # c = a + b
 # print(c)
