@@ -72,6 +72,13 @@ class Matrix:
             row += 1
         return temp
 
+    def rank(self):
+        res = 0
+        for i in self.rref():
+            if i != [0] * self.__c:
+                res += 1
+        return res
+
     # Operator overloading
     def __getitem__(self, item):
         return self.__mat[item]
@@ -151,7 +158,7 @@ class Matrix:
 
 
 m, n = 4, 4
-a = Matrix(3, 4, [[1, 0, 1, 5], [1, 2, 0, 6], [4, 6, 2, 7]])
+a = Matrix(3, 4, [[1, 0, 2, 1], [0, 2, 4, 2], [0, 2, 2, 1]])
 b = Matrix(m, n, [[1, 0, 1, 8], [1, 2, 0, 3], [4, 6, 2, 6], [0, 3, 6, 4]])
 c = Matrix(6, 6, [[1, 0, 0, 0, 0, 2], [0, 1, 0, 0, 2, 0], [0, 0, 1, 2, 0, 0], [0, 0, 2, 1, 0, 0], [0, 2, 0, 0, 1, 0],
                   [2, 0, 0, 0, 0, 1]])
@@ -160,6 +167,7 @@ f = Matrix(3, 2, [[7, 8], [9, 10], [11, 12]])
 g = Matrix(4, 5, [[1, 2, 3, 4, 5], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [6, 7, 8, 9, 10]])
 l = Matrix(3, 5, [[1, 2, 3, 4, 5], [0, 0, 2, 3, 4], [0, 0, 0, 1, 3]])
 
-print(l.rref())
+print(a.rref())
+print(a.rank())
 # c = a + b
 # print(c)
