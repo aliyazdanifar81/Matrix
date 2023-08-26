@@ -79,6 +79,17 @@ class Matrix:
                 res += 1
         return res
 
+    def inverse(self):
+        det = self.determinant()
+        if det != 0:
+            adjoint = self.__adj()
+            for i in range(adjoint.__r):
+                for j in range(adjoint.__c):
+                    adjoint[i][j] = adjoint[i][j] / det
+        else:
+            raise Exception("Matrix does not have inverse")
+        return adjoint
+
     # Operator overloading
     def __getitem__(self, item):
         return self.__mat[item]
@@ -156,18 +167,29 @@ class Matrix:
             self.__mulnum(num, ind, addind=addind)
             self.transpose()
 
+    def __adj(self):  # calculate adjoint of matrices
+        res = []
+        for i in range(self.__r):
+            temp = []
+            for j in range(self.__c):
+                temp.append((Matrix(self.__r - 1, self.__c - 1, self.__delete_deter(i, j).__mat).determinant()) * (
+                        (-1) ** (i + j)))
+            res.append(temp.copy())
+        result = Matrix(self.__r, self.__c, res)
+        result.transpose()
+        return result
 
-m, n = 4, 4
+
 a = Matrix(3, 4, [[1, 0, 2, 1], [0, 2, 4, 2], [0, 2, 2, 1]])
-b = Matrix(m, n, [[1, 0, 1, 8], [1, 2, 0, 3], [4, 6, 2, 6], [0, 3, 6, 4]])
+b = Matrix(4, 4, [[1, 0, 1, 8], [1, 2, 0, 3], [4, 6, 2, 6], [0, 3, 6, 4]])
 c = Matrix(6, 6, [[1, 0, 0, 0, 0, 2], [0, 1, 0, 0, 2, 0], [0, 0, 1, 2, 0, 0], [0, 0, 2, 1, 0, 0], [0, 2, 0, 0, 1, 0],
                   [2, 0, 0, 0, 0, 1]])
+d = Matrix(3, 3, [[-3, 2, -5], [-1, 0, -2], [3, -4, 1]])
 e = Matrix(2, 3, [[1, 2, 3], [4, 5, 6]])
 f = Matrix(3, 2, [[7, 8], [9, 10], [11, 12]])
 g = Matrix(4, 5, [[1, 2, 3, 4, 5], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [6, 7, 8, 9, 10]])
 l = Matrix(3, 5, [[1, 2, 3, 4, 5], [0, 0, 2, 3, 4], [0, 0, 0, 1, 3]])
 
-print(a.rref())
-print(a.rank())
-# c = a + b
+print(l.inverse())
+
 # print(c)
