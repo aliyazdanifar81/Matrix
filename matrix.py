@@ -125,12 +125,12 @@ class Matrix:
         return Matrix(self.__r, clm, temp)
 
     def __str__(self):
-        res = ""
-        for i in self.__mat:
-            for j in i:
-                res += f'{str(j)} '
-            res += '\n'
-        return res
+        tmp = [[str(int(char)) if char - int(char) == 0 else str(char) for char in row] for row in self.__mat]
+        lens = [max(map(len, col)) for col in zip(*tmp)]
+        fmt = '\t'.join('{{:{}}}'.format(x) for x in
+                        lens)  # code has been copied from "https://stackoverflow.com/questions/13214809/pretty-print-2d-list" with a little changes
+        table = [fmt.format(*row) for row in tmp]
+        return '\n'.join(table)
 
     # private functions
     def __delete_deter(self, r, c):
@@ -190,6 +190,6 @@ f = Matrix(3, 2, [[7, 8], [9, 10], [11, 12]])
 g = Matrix(4, 5, [[1, 2, 3, 4, 5], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [6, 7, 8, 9, 10]])
 l = Matrix(3, 5, [[1, 2, 3, 4, 5], [0, 0, 2, 3, 4], [0, 0, 0, 1, 3]])
 
-print(l.inverse())
+# print(b.inverse()
 
-# print(c)
+print(c.inverse()*c)
